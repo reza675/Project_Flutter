@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(color: Colors.black),
                     ),
                     onTap: () {
-                      Navigator.pop(context); 
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                     ),
                     title: Text(
-                      'About',
+                      'Tentang Kami',
                       style: TextStyle(color: Colors.black),
                     ),
                     onTap: () {

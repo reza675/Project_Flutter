@@ -1,7 +1,16 @@
 # sole_mate
 
-A new Flutter project.
+Projek flutter yang bertemakan e commerce
+User dapat melakukan penambahan barang berupa sepatu di pages yang telah di sediakan.
+Pada humberg terdapat 3 sub menu utama yaitu Belanja, Tentang Kami, dan logout
 
+Flutter ini dibuat dari beberapa sumber dalam pengembangannya, seperti Youtube, AI, dan dokumentasi flutter pada saat zoom
+
+Projek ini dibuat oleh
+Nama: Reza Rasendriya Adi Putra
+NIM: 123230030
+Prodi: Informatika
+Univeersitas: UPN Veteran Yogyakarta
 ## Getting Started
 
 This project is a starting point for a Flutter application.
