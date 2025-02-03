@@ -12,12 +12,15 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-  //add sepatu ke keranjang
+  // State untuk menyimpan query pencarian
+  String searchQuery = '';
+
+  // Fungsi untuk menambahkan sepatu ke keranjang
   void addSepatuKeranjang(Sepatu sepatu) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Masukkan Jumlah Sepatu: '),
+        title: const Text('Masukkan Jumlah Sepatu: '),
         content: TextField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -31,7 +34,7 @@ class _ShopPageState extends State<ShopPage> {
               int jumlah = int.parse(value);
               if (jumlah > 0) {
                 Provider.of<Keranjang>(context, listen: false)
-                    .addSepatuDenganJumlah(sepatu, jumlah); 
+                    .addSepatuDenganJumlah(sepatu, jumlah);
               }
             }
           },
@@ -39,11 +42,11 @@ class _ShopPageState extends State<ShopPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Batal'),
+            child: const Text('Batal'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Tambah'),
+            child: const Text('Tambah'),
           ),
         ],
       ),
@@ -69,6 +72,11 @@ class _ShopPageState extends State<ShopPage> {
                 hintText: 'Cari produk disini',
                 prefixIcon: const Icon(Icons.search),
               ),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value.toLowerCase();
+                });
+              },
             ),
           ),
 
@@ -117,6 +125,13 @@ class _ShopPageState extends State<ShopPage> {
               itemBuilder: (context, index) {
                 // Ambil sepatu dari daftar
                 Sepatu sepatu = value.getSepatuList()[index];
+
+                // Filter sepatu berdasarkan query pencarian
+                if (searchQuery.isNotEmpty &&
+                    !sepatu.nama.toLowerCase().contains(searchQuery)) {
+                  return Container(); // Return container kosong jika tidak sesuai
+                }
+
                 return SepatuTile(
                   sepatu: sepatu,
                   onTap: () => addSepatuKeranjang(sepatu),
@@ -126,7 +141,7 @@ class _ShopPageState extends State<ShopPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 25.0),
-            child: Divider(   
+            child: Divider(
               thickness: 1,
             ),
           )
