@@ -129,7 +129,7 @@ class _ShopPageState extends State<ShopPage> {
                 // Filter sepatu berdasarkan query pencarian
                 if (searchQuery.isNotEmpty &&
                     !sepatu.nama.toLowerCase().contains(searchQuery)) {
-                  return Container(); // Return container kosong jika tidak sesuai
+                  return Container();
                 }
 
                 return SepatuTile(

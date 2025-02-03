@@ -6,10 +6,13 @@ class SepatuTile extends StatelessWidget {
   final String tambahan;
   final void Function()? onTap;
 
-   const SepatuTile({super.key, required this.sepatu, this.tambahan = 'RP ',required this.onTap});
+  const SepatuTile(
+      {super.key,
+      required this.sepatu,
+      this.tambahan = 'RP ',
+      required this.onTap});
 
   @override
-
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 25),
@@ -30,7 +33,7 @@ class SepatuTile extends StatelessWidget {
             fit: BoxFit.fill,
           ),
         ),
-        //deskripsi 
+        //deskripsi
         Padding(
           padding: const EdgeInsets.only(left: 25.0),
           child: Text(
