@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
     const ShopPage(),
     //keranjang page
     const CartPage(),
+
   ];
 
   @override

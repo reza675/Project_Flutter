@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sole_mate/component/favorite_tile.dart';
 import '../models/sepatu.dart';
 
 class SepatuTile extends StatelessWidget {
@@ -23,14 +24,17 @@ class SepatuTile extends StatelessWidget {
       ),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        FavoriteTile(),
         //gambar sepatu
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Image.asset(
             sepatu.gambar,
-            height: 150,
-            width: 250,
+            height: 275,
+            width: 275,
+            alignment: Alignment.topCenter,
             fit: BoxFit.fill,
+            
           ),
         ),
         //deskripsi
@@ -90,5 +94,5 @@ class SepatuTile extends StatelessWidget {
         ),
       ]),
     );
-  } 
+  }
 }

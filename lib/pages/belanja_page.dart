@@ -17,6 +17,8 @@ class _ShopPageState extends State<ShopPage> {
 
   // Fungsi untuk menambahkan sepatu ke keranjang
   void addSepatuKeranjang(Sepatu sepatu) {
+    int jumlah = 0;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -31,11 +33,9 @@ class _ShopPageState extends State<ShopPage> {
           ),
           onChanged: (value) {
             if (value.isNotEmpty && int.tryParse(value) != null) {
-              int jumlah = int.parse(value);
-              if (jumlah > 0) {
-                Provider.of<Keranjang>(context, listen: false)
-                    .addSepatuDenganJumlah(sepatu, jumlah);
-              }
+              jumlah = int.parse(value);
+            } else {
+              jumlah = 0;
             }
           },
         ),
@@ -45,7 +45,13 @@ class _ShopPageState extends State<ShopPage> {
             child: const Text('Batal'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              if (jumlah > 0) {
+                Provider.of<Keranjang>(context, listen: false)
+                    .addSepatuDenganJumlah(sepatu, jumlah);
+              }
+              Navigator.pop(context);
+            },
             child: const Text('Tambah'),
           ),
         ],
@@ -56,96 +62,98 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Keranjang>(
-      builder: (context, value, child) => Column(
-        children: [
-          // Pencarian
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+      builder: (context, value, child) => SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Pencarian
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: 'Cari produk disini',
+                  prefixIcon: const Icon(Icons.search),
                 ),
-                hintText: 'Cari produk disini',
-                prefixIcon: const Icon(Icons.search),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value.toLowerCase();
-                });
-              },
-            ),
-          ),
-
-          // Pesan
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-            child: Text(
-              'Temukan Sepatu Impianmu...',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 20,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
               ),
             ),
-          ),
 
-          // Produk
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Big Sales',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+            // Pesan
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+              child: Text(
+                'Temukan Sepatu Impianmu...',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 20,
                 ),
-                Text(
-                  'Lihat semua',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            // Big Sales
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Big Sales',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
                   ),
-                ),
-              ],
+                  Text(
+                    'Lihat semua',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
-          // Daftar Sepatu
-          Expanded(
-            child: ListView.builder(
-              itemCount: value.getSepatuList().length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                // Ambil sepatu dari daftar
-                Sepatu sepatu = value.getSepatuList()[index];
+            SizedBox(
+              height: 500,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: value.getSepatuList().length,
+                itemBuilder: (context, index) {
+                  Sepatu sepatu = value.getSepatuList()[index];
 
-                // Filter sepatu berdasarkan query pencarian
-                if (searchQuery.isNotEmpty &&
-                    !sepatu.nama.toLowerCase().contains(searchQuery)) {
-                  return Container();
-                }
+                  // Filter pencarian
+                  if (searchQuery.isNotEmpty &&
+                      !sepatu.nama.toLowerCase().contains(searchQuery)) {
+                    return Container();
+                  }
 
-                return SepatuTile(
-                  sepatu: sepatu,
-                  onTap: () => addSepatuKeranjang(sepatu),
-                );
-              },
+                  return SepatuTile(
+                    sepatu: sepatu,
+                    onTap: () => addSepatuKeranjang(sepatu),
+                  );
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: Divider(
-              thickness: 1,
+
+            // Garis pemisah
+            Padding(
+              padding: const EdgeInsets.only(top: 25.0),
+              child: Divider(thickness: 1),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
