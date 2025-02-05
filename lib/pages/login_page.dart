@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
 
               // Username TextField
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 400.0),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
               // Password TextField
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 400.0),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
