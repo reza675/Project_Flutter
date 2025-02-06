@@ -24,7 +24,12 @@ class SepatuTile extends StatelessWidget {
       ),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        FavoriteTile(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FavoriteTile(),
+          ],
+        ),
         //gambar sepatu
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -34,7 +39,6 @@ class SepatuTile extends StatelessWidget {
             width: 275,
             alignment: Alignment.topCenter,
             fit: BoxFit.fill,
-            
           ),
         ),
         //deskripsi

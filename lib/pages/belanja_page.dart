@@ -40,19 +40,44 @@ class _ShopPageState extends State<ShopPage> {
           },
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Batal'),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.red, width: 2),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.red,
+            ),
+            child: TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Batal',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              if (jumlah > 0) {
-                Provider.of<Keranjang>(context, listen: false)
-                    .addSepatuDenganJumlah(sepatu, jumlah);
-              }
-              Navigator.pop(context);
-            },
-            child: const Text('Tambah'),
+          const SizedBox(width: 10),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.green, width: 2),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.green,
+            ),
+            child: TextButton(
+              onPressed: () {
+                if (jumlah > 0) {
+                  Provider.of<Keranjang>(context, listen: false)
+                      .addSepatuDenganJumlah(sepatu, jumlah);
+                }
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Tambah',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
         ],
       ),

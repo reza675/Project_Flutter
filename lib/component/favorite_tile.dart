@@ -23,7 +23,7 @@ class _FavoriteTileState extends State<FavoriteTile> {
         isFavorite ? Icons.favorite : Icons.favorite_border,
         color: isFavorite ? Colors.red : Colors.grey,
       ),
-      onPressed: () => toggleFavorite(context), // Tambahkan context
+      onPressed: () => toggleFavorite(context),
     );
   }
 }
