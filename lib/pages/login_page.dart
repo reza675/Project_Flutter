@@ -12,6 +12,9 @@ class _LoginPageState extends State<LoginPage> {
   // Controller untuk input username dan password
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  
+  // Form Key for validation
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,71 +58,67 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
 
-              // Username TextField
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: TextField(
-                    controller: usernameController,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Username',
+              // Form Input
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Nama',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nama tidak boleh kosong';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-              // Password TextField
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: true, // Menyembunyikan teks password
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password tidak boleh kosong';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
 
               // Daftar Sekarang Button
               GestureDetector(
                 onTap: () {
                   String username = usernameController.text;
                   String password = passwordController.text;
+                  
                   // Validasi field tidak kosong
-                  if (username.isEmpty || password.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Username dan Password tidak boleh kosong!'),
+                  if (_formKey.currentState?.validate() ?? false) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          username: username,
+                          password: password,
+                        ),
                       ),
                     );
-                    return; 
-                  }
-                 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(
-                        username: username,
-                        password: password,
-                      ),
-                    ),
-                  );
+                  } 
                 },
                 child: Container(
                   width: 250,

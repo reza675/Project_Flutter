@@ -29,13 +29,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   //halaman yang ditampilkan
-  final List<Widget> _pages = [
-    //belanja page
-    const ShopPage(),
-    //keranjang page
-    const CartPage(),
+  final List<Widget> _pages = [];
 
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _pages.addAll([
+      // belanja page
+      const ShopPage(),
+      // keranjang page
+      CartPage(username: widget.username, password: widget.password),
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,6 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.black,
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(
@@ -108,7 +112,6 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(

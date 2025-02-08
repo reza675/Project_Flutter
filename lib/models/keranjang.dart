@@ -32,8 +32,7 @@ class Keranjang extends ChangeNotifier {
       harga: '1.300.000',
       gambar: 'lib/images/SneakersSkateNike.png',
       jumlah: 0,
-      deskripsi:
-          'Sepatu skateboarding dengan sol tahan aus dan grip maksimal.',
+      deskripsi: 'Sepatu skateboarding dengan sol tahan aus dan grip maksimal.',
     ),
     Sepatu(
       nama: 'Nike Hyperadapt 1.0',
@@ -70,6 +69,10 @@ class Keranjang extends ChangeNotifier {
   ];
 
   List<Sepatu> keranjangPengguna = [];
+
+  // Menyimpan status apakah sepatu sudah dibeli
+  Map<String, bool> _statusPembelian = {};
+
   List<Sepatu> getSepatuList() {
     return tokoSepatu;
   }
@@ -92,12 +95,23 @@ class Keranjang extends ChangeNotifier {
 
   void hapusSepatuKeranjang(Sepatu sepatu) {
     keranjangPengguna.remove(sepatu);
+    _statusPembelian.remove(sepatu.nama); // Hapus status pembelian saat item dihapus
     notifyListeners();
   }
 
- void addSepatuDenganJumlah(Sepatu sepatu, int jumlah) {
-  Sepatu newSepatu = sepatu.copyWith(jumlah: jumlah);
-  addSepatukeKeranjang(newSepatu);
-}
-  
+  void addSepatuDenganJumlah(Sepatu sepatu, int jumlah) {
+    Sepatu newSepatu = sepatu.copyWith(jumlah: jumlah);
+    addSepatukeKeranjang(newSepatu);
+  }
+
+  // Tandai sepatu sebagai dibeli
+  void tandaiSebagaiDibeli(String namaSepatu) {
+    _statusPembelian[namaSepatu] = true;
+    notifyListeners();
+  }
+
+  // Cek apakah sepatu sudah dibeli
+  bool isPurchased(String namaSepatu) {
+    return _statusPembelian[namaSepatu] ?? false;
+  }
 }

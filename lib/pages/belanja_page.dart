@@ -55,7 +55,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ),
             ),
-          ),
+          ),  
           const SizedBox(width: 10),
           Container(
             decoration: BoxDecoration(
