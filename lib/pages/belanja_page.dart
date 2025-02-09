@@ -55,7 +55,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ),
             ),
-          ),  
+          ),
           const SizedBox(width: 10),
           Container(
             decoration: BoxDecoration(
@@ -65,9 +65,19 @@ class _ShopPageState extends State<ShopPage> {
             ),
             child: TextButton(
               onPressed: () {
-                if (jumlah > 0) {
-                  Provider.of<Keranjang>(context, listen: false)
-                      .addSepatuDenganJumlah(sepatu, jumlah);
+                var keranjang = Provider.of<Keranjang>(context, listen: false);
+                if (jumlah > 0 && !keranjang.isPurchased(sepatu.nama)) {
+                  keranjang.addSepatuDenganJumlah(sepatu, jumlah);
+                } else if (keranjang.isPurchased(sepatu.nama)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Sepatu ini sudah dibeli!')),
+                  );
+                  return;
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Jumlah harus lebih dari 0')),
+                  );
+                  return;
                 }
                 Navigator.pop(context);
               },

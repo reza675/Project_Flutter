@@ -69,9 +69,10 @@ class Keranjang extends ChangeNotifier {
   ];
 
   List<Sepatu> keranjangPengguna = [];
+  List<Sepatu> riwayatPembelian = [];
 
   // Menyimpan status apakah sepatu sudah dibeli
-  Map<String, bool> _statusPembelian = {};
+  final Map<String, bool> _statusPembelian = {};
 
   List<Sepatu> getSepatuList() {
     return tokoSepatu;
@@ -81,7 +82,16 @@ class Keranjang extends ChangeNotifier {
     return keranjangPengguna;
   }
 
+  // Ambil hanya sepatu yang sudah dibeli
+  List<Sepatu> getRiwayatList() {
+    return riwayatPembelian;
+  }
+
+  // Tambahkan sepatu ke keranjang jika belum dibeli
   void addSepatukeKeranjang(Sepatu sepatu) {
+    if (isPurchased(sepatu.nama)) {
+      return; // Cegah penambahan jika sudah dibeli
+    }
     bool sepatuAda = keranjangPengguna.any((item) => item.nama == sepatu.nama);
     if (sepatuAda) {
       Sepatu sepatuDiKeranjang =
@@ -93,9 +103,16 @@ class Keranjang extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Hapus sepatu dari keranjang
   void hapusSepatuKeranjang(Sepatu sepatu) {
     keranjangPengguna.remove(sepatu);
     _statusPembelian.remove(sepatu.nama); // Hapus status pembelian saat item dihapus
+    notifyListeners();
+  }
+
+  // Hapus sepatu dari riwayat pembelian
+  void hapusRiwayatPembelian(Sepatu sepatu) {
+    riwayatPembelian.remove(sepatu); // Hapus sepatu dari riwayatPembelian
     notifyListeners();
   }
 
@@ -104,9 +121,18 @@ class Keranjang extends ChangeNotifier {
     addSepatukeKeranjang(newSepatu);
   }
 
-  // Tandai sepatu sebagai dibeli
+  // Tandai sepatu sebagai dibeli dan pindahkan ke riwayat pembelian
   void tandaiSebagaiDibeli(String namaSepatu) {
     _statusPembelian[namaSepatu] = true;
+
+    // Pindahkan dari keranjang ke riwayat pembelian
+    Sepatu? sepatuDibeli =
+        keranjangPengguna.firstWhere((item) => item.nama == namaSepatu, orElse: () => Sepatu(nama: '', harga: '', gambar: '', jumlah: 0, deskripsi: ''));
+    
+    if (sepatuDibeli.nama.isNotEmpty) {
+      riwayatPembelian.add(sepatuDibeli);
+    }
+
     notifyListeners();
   }
 

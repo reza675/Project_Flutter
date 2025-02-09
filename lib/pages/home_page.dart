@@ -3,6 +3,7 @@ import 'package:sole_mate/component/bottom_navbar.dart';
 import 'package:sole_mate/pages/about.dart';
 import 'package:sole_mate/pages/belanja_page.dart';
 import 'package:sole_mate/pages/keranjang_page.dart';
+import 'package:sole_mate/pages/riwayat_pembelian.dart';
 import 'landing_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -129,6 +130,30 @@ class _HomePageState extends State<HomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AboutPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.history,
+                      color: Colors.black,
+                    ),
+                    title: Text(
+                      'Riwayat Pembelian',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RiwayatPembelian(
+                            
+                          ),
                         ),
                       );
                     },

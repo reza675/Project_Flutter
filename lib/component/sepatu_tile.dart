@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sole_mate/component/favorite_tile.dart';
+import 'package:sole_mate/models/keranjang.dart';
 import '../models/sepatu.dart';
 
 class SepatuTile extends StatelessWidget {
@@ -15,6 +17,7 @@ class SepatuTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool sudahDibeli = Provider.of<Keranjang>(context).isPurchased(sepatu.nama);
     return Container(
       margin: EdgeInsets.only(left: 25),
       width: 300,
@@ -76,23 +79,29 @@ class SepatuTile extends StatelessWidget {
                   ),
                 ],
               ),
-              GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.brown,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      bottomRight: Radius.circular(12),
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.add_shopping_cart_rounded,
-                    color: Colors.white,
+              // Tombol beli
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: sudahDibeli ? Colors.green : Colors.brown,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12),
                   ),
                 ),
-              )
+                child: sudahDibeli
+                    ? Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.white,
+                      )
+                    : GestureDetector(
+                        onTap: onTap,
+                        child: Icon(
+                          Icons.add_shopping_cart_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
             ],
           ),
         ),

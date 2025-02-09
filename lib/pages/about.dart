@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.brown[100],
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -52,7 +52,7 @@ class AboutPage extends StatelessWidget {
                   'Selamat datang di SoleMate!',
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 87, 84, 84),
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
