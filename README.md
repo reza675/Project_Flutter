@@ -10,7 +10,7 @@ Projek ini dibuat oleh
 Nama: Reza Rasendriya Adi Putra
 NIM: 123230030
 Prodi: Informatika
-Univeersitas: UPN Veteran Yogyakarta
+Universitas: UPN Veteran Yogyakarta
 ## Getting Started
 
 This project is a starting point for a Flutter application.
