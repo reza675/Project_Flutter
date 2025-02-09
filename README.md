@@ -1,8 +1,9 @@
 # sole_mate
 
 Projek flutter yang bertemakan e commerce
-User dapat melakukan penambahan barang berupa sepatu di pages yang telah di sediakan.
-Pada humberg terdapat 3 sub menu utama yaitu Belanja, Tentang Kami, dan logout
+User dapat melakukan penambahan barang berupa sepatu di pages yang telah di sediakan. 
+User dapat melakukan pembelian dengan form yang berada di keranjang dan akan ke tracking ke riwayat pembayaran
+Pada humberg terdapat 4 sub menu utama yaitu Belanja, Tentang Kami, Riwayat pembelian, dan logout
 
 Flutter ini dibuat dari beberapa sumber dalam pengembangannya, seperti Youtube, AI, dan dokumentasi flutter pada saat zoom
 
